@@ -63,8 +63,8 @@ def save_transcript(transcript_data, txt_file):
     with open(os.path.join(transcript_path, txt_file),"w") as f:
         f.write(transcript_data)
 
-st.title("🗣 Automatic Speech Recognition using whisper by OpenAI ✨")
-st.info('✨ Supports all popular audio formats - WAV, MP3, MP4, OGG, WMA, AAC, FLAC, FLV 😉')
+st.title("🗣 Automatic Speech Recognition")
+st.info('✨ Supports Audio formats - WAV, MP3, MP4, OGG, WMA, AAC, FLAC, FLV 😉')
 uploaded_file = st.file_uploader("Upload audio file", type=["wav","mp3","ogg","wma","aac","flac","mp4","flv"])
 
 audio_file = None
@@ -109,6 +109,6 @@ if uploaded_file is not None:
 else:
     st.warning('⚠ Please upload your audio file 😯')
 
-st.markdown("<br><hr><center>Made with ❤️ by <a href='mailto:ralhanprateek@gmail.com?subject=ASR Whisper WebApp!&body=Please specify the issue you are facing with the app.'><strong>Prateek Ralhan</strong></a> with the help of [whisper](https://github.com/openai/whisper) built by [OpenAI](https://github.com/openai) ✨</center><hr>", unsafe_allow_html=True)
+st.markdown("<br><hr><center>Made with ❤️ by <a href='mailto:rigwedsarougi77@gmail.com?subject=ASR Whisper WebApp!&body=Please specify the issue you are facing with the app.'><strong>Rigved Sarougi</strong></a><hr>", unsafe_allow_html=True)
 
 
