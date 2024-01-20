@@ -12,10 +12,10 @@ WORKDIR /app
 # Copy the application code
 COPY . /app
 
-# Install dependencies, FFmpeg, and ffprobe
+# Install dependencies, FFmpeg, and ffprobe from Aptfile
+COPY Aptfile .
 RUN apt-get update && \
-    apt-get install -y ffmpeg && \
-    apt-get install -y ffmpeg ffprobe && \
+    cat Aptfile | xargs apt-get install -y && \
     $VIRTUAL_ENV/bin/pip install --no-cache-dir -r requirements.txt
 
 # Expose port
