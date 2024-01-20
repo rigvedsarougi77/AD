@@ -15,7 +15,7 @@ COPY . /app
 # Install dependencies, FFmpeg, and ffprobe
 RUN apt-get update && \
     apt-get install -y ffmpeg && \
-    apt-get install -y ffprobe && \
+    apt-get install -y ffmpeg ffprobe && \
     $VIRTUAL_ENV/bin/pip install --no-cache-dir -r requirements.txt
 
 # Expose port
