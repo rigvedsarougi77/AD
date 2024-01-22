@@ -90,7 +90,7 @@ def save_transcript(transcript_data, txt_file):
         f.write(transcript_data)
 
 st.title("🗣 Automatic Speech Recognition")
-st.info('✨ Supports Audio formats - WAV, MP3, MP4, OGG, WMA, AAC, FLAC, FLV 😉')
+st.info('Supports Audio formats - WAV, MP3, MP4, OGG, WMA, AAC, FLAC, FLV')
 uploaded_file = st.file_uploader("Upload audio file", type=["wav", "mp3", "ogg", "wma", "aac", "flac", "mp4", "flv"])
 
 audio_file = None
@@ -99,7 +99,7 @@ if uploaded_file is not None:
     audio_bytes = uploaded_file.read()
     with open(os.path.join(upload_path, uploaded_file.name), "wb") as f:
         f.write((uploaded_file).getbuffer())
-    with st.spinner(f"Processing Audio ... 💫"):
+    with st.spinner(f"Processing Audio"):
         output_audio_file = uploaded_file.name.split('.')[0] + '.mp3'
         output_audio_file = to_mp3(uploaded_file, output_audio_file, upload_path, download_path)
         audio_file = open(os.path.join(download_path, output_audio_file), 'rb')
@@ -108,13 +108,13 @@ if uploaded_file is not None:
     st.markdown("---")
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("Feel free to play your uploaded audio file 🎼")
+        st.markdown("Feel free to play your uploaded audio file")
         st.audio(audio_bytes)
     with col2:
         whisper_model_type = st.radio("Please choose your model type", ('Tiny', 'Base', 'Small', 'Medium', 'Large'))
 
     if st.button("Generate Transcript"):
-        with st.spinner(f"Generating Transcript... 💫"):
+        with st.spinner(f"Generating Transcript"):
             transcript = process_audio(str(os.path.abspath(os.path.join(download_path, output_audio_file))),
                                        whisper_model_type.lower())
 
@@ -136,16 +136,16 @@ if uploaded_file is not None:
             })
 
         if st.download_button(
-                label="Download Transcript 📝",
+                label="Download Transcript",
                 data=output_file_data,
                 file_name=output_txt_file,
                 mime='text/plain'
         ):
             st.balloons()
-            st.success('✅ Download Successful !!')
+            st.success(' Download Successful ')
 
 else:
-    st.warning('⚠ Please upload your audio file 😯')
+    st.warning(' Please upload your audio file ')
 
 # Display the result dataframe
 if 'output_df' in locals():
