@@ -45,7 +45,7 @@ fraud_keywords = [
 @st.cache
 def process_audio(filename, model_type):
     model = whisper.load_model(model_type)
-    result = model.transcribe(filename)
+    result = model.transcribe(filename, fp16=False, language='English')
     return result["text"]
 
 @st.cache
