@@ -1,9 +1,9 @@
 import os
+from faster_whisper import WhisperModel
 import whisper
 import streamlit as st
 from pydub import AudioSegment
 import pandas as pd
-from concurrent.futures import ThreadPoolExecutor
 
 st.set_page_config(
     page_title="Whisper based ASR",
@@ -42,16 +42,6 @@ fraud_keywords = [
     'Cancel'
 ]
 
-@st.cache
-def process_audio(filename, model_type):
-    model = whisper.load_model(model_type)
-    result = model.transcribe(filename, fp16=False, language='English')
-    return result["text"]
-
-@st.cache
-def save_transcript(transcript_data, txt_file):
-    with open(os.path.join(transcript_path, txt_file), "w") as f:
-        f.write(transcript_data)
 
 def to_mp3(audio_file, output_audio_file, upload_path, download_path):
     ## Converting Different Audio Formats To MP3 ##
@@ -88,9 +78,18 @@ def to_mp3(audio_file, output_audio_file, upload_path, download_path):
         audio_data.export(os.path.join(download_path, output_audio_file), format="mp3", tags=audio_tags)
     return output_audio_file
 
-def process_audio_parallel(args):
-    filename, model_type = args
-    return process_audio(filename, model_type)
+def process_audio(filename, model_type):
+    device = "cpu"
+    compute_type = "int8"
+    model = WhisperModel(model_type, device=device, compute_type=compute_type)
+    segments, info = model.transcribe(filename)
+    transcribed_text = ' '.join([segment.text for segment in segments])
+    result = {"text": transcribed_text}
+    return result["text"]
+
+def save_transcript(transcript_data, txt_file):
+    with open(os.path.join(transcript_path, txt_file), "w") as f:
+        f.write(transcript_data)
 
 st.title("🗣 Automatic Speech Recognition")
 st.info('Supports Audio formats - WAV, MP3, MP4, OGG, WMA, AAC, FLAC, FLV')
@@ -114,14 +113,12 @@ if uploaded_file is not None:
         st.markdown("Feel free to play your uploaded audio file")
         st.audio(audio_bytes)
     with col2:
-        whisper_model_type = st.radio("Please choose your model type", ('Tiny', 'Base', 'Small', 'Medium', 'Large'))
+        whisper_model_type = st.radio("Please choose your model type", ('Tiny', 'Base', 'Small', 'Medium', 'large-v3'))
 
     if st.button("Generate Transcript"):
         with st.spinner(f"Generating Transcript"):
-            with ThreadPoolExecutor() as executor:
-                transcript = executor.map(process_audio_parallel, [(str(os.path.abspath(os.path.join(download_path, output_audio_file))), whisper_model_type.lower())])
-
-            transcript = list(transcript)[0]  # Extracting the result from the generator
+            transcript = process_audio(str(os.path.abspath(os.path.join(download_path, output_audio_file))),
+                                       whisper_model_type.lower())
 
             output_txt_file = str(output_audio_file.split('.')[0] + ".txt")
 
@@ -129,6 +126,7 @@ if uploaded_file is not None:
             output_file = open(os.path.join(transcript_path, output_txt_file), "r")
             output_file_data = output_file.read()
 
+            # Fraud detection
             detected_keywords = [keyword for keyword in fraud_keywords if keyword.lower() in output_file_data.lower()]
             fraud_detected = len(detected_keywords) > 0
 
