@@ -4,10 +4,7 @@ import whisper
 import streamlit as st
 from pydub import AudioSegment
 import pandas as pd
-import logging
 
-logging.basicConfig()
-logging.getLogger("faster_whisper").setLevel(logging.DEBUG)
 st.set_page_config(
     page_title="Whisper based ASR",
     page_icon="musical_note",
