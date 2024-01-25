@@ -1,4 +1,3 @@
-pip install --force-reinstall "faster-whisper @ https://github.com/guillaumekln/faster-whisper/archive/refs/heads/master.tar.gz"
 altair==4.2.0
 attrs==22.1.0
 backports.zoneinfo==0.2.1
