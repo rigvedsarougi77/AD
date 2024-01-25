@@ -62,3 +62,10 @@ validators==0.20.0
 watchdog==2.1.9
 whisper @ git+https://github.com/openai/whisper.git@8cf36f3508c9acd341a45eb2364239a3d81458b9
 zipp==3.8.1
+av==10.*
+ctranslate2>=3.22,<4
+huggingface_hub>=0.13
+tokenizers>=0.13,<0.16
+onnxruntime>=1.14,<2
+faster-whisper @ https://github.com/guillaumekln/faster-whisper/archive/refs/heads/master.tar.gz
+
