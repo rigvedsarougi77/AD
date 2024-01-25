@@ -1,3 +1,5 @@
+
+faster-whisper @ https://github.com/guillaumekln/faster-whisper/archive/refs/heads/master.tar.gz
 altair==4.2.0
 attrs==22.1.0
 backports.zoneinfo==0.2.1
@@ -61,5 +63,4 @@ urllib3==1.26.12
 validators==0.20.0
 watchdog==2.1.9
 whisper @ git+https://github.com/openai/whisper.git@8cf36f3508c9acd341a45eb2364239a3d81458b9
-faster-whisper @ https://github.com/guillaumekln/faster-whisper/archive/refs/heads/master.tar.gz
 zipp==3.8.1
