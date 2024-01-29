@@ -1,5 +1,5 @@
 import os
-from faster_whisper import WhisperModel
+from faster-whisper import WhisperModel
 import whisper
 import streamlit as st
 from pydub import AudioSegment
