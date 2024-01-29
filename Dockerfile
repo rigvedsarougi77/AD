@@ -1,4 +1,4 @@
-FROM python:3.7
+FROM python:3.9.9
 
 # Install virtualenv and create a virtual environment
 RUN pip install virtualenv
